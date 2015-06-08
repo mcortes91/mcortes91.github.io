@@ -1,1 +1,1 @@
-![my Wireframe!](/Users/mcortes2891/downloads/project1_wireframe.jpg)
+![my Wireframe!](image/project1_wireframe.jpg)

@@ -5,6 +5,9 @@ var firstPlayer;
 var secondPlayer;
 var currentPlayer;
 var boxes = [];
+var firstPlayerScore = 0;
+var secondPlayerScore = 0;
+var clickable = false;
 
 var setCurrentPlayer = function () {
 	var input = prompt('player, choose x or o: ').toUpperCase();
@@ -16,6 +19,7 @@ var setCurrentPlayer = function () {
 		secondPlayer = 'X';
 	} 
 	currentPlayer = firstPlayer;
+	clickable = true;
 }
 
 var makeGame = function() {
@@ -30,102 +34,119 @@ var makeGame = function() {
 	 return ticTacToe;
 };
 
-var render = function() {
-	var $game = $('<div>').attr('id', 'game');
-	var $ul = $('<ul>');
+var reset = function() {
+	clickable = true;
+	boxes = [];
+	$('#game').html("");
+	startGame();
+}
 
+var render = function() {
+	var $game = $('<div>').attr('id', 'gameBoard');
+	var $player1 = $('<div>').attr('id', 'player1');
+	var $player2 = $('<div>').attr('id', 'player2');
+	var $reset = $('<button>reset</button>').attr('id', 'reset');
+	$reset.on('click', function() {
+		reset();
+	})
+	$('#game').append($player1, $player2, $reset);
+	var $ul = $('<ul>');
 	for(i = 0; i < ticTacToe.length; i++) {
 		var row = ticTacToe[i];
-
 		for(j = 0; j < row.length; j++) {
 			$li = $('<li>');
 			boxes.push($li);
 			$li.on('click', function (eventObject) {
-				if($(this).text() == false){
-					$(this).closest('li').addClass('xo').text(currentPlayer);
-				} else {
-					eventObject.preventDefault();
+				if(clickable){
+					if($(this).text() == false){
+						$(this).closest('li').addClass('xo').text(currentPlayer);
+					} 
+					changeTurn();
+					determineWinner();
 				}
-				changeTurn();
-				determineWinner();
-	})
-				
+			})
 			$ul.append($li);
-
-
 		};
-		
 	};
-	$('body').append($game);
+	$('#game').append($game);
 	$game.append($ul);
+	$('#player1').text('Player: ' + firstPlayerScore);
+	$('#player2').text('Player: ' + secondPlayerScore);
 };
 
 
 
-function changeTurn(){
-      if(currentPlayer == firstPlayer){
-           currentPlayer = secondPlayer ;
-      } else if( currentPlayer == secondPlayer){
-           currentPlayer = firstPlayer;
-      }
+var changeTurn = function(){
+	if(currentPlayer == firstPlayer){
+    	currentPlayer = secondPlayer ;
+    } else if( currentPlayer == secondPlayer){
+        currentPlayer = firstPlayer;
+    }
+}
 
- }
-
-// var determineWinner = function() {
-// 	if(boxes[0].text() == boxes[1].text() && boxes[0].text() == boxes[2].text() && boxes[0].text() != 'O' && boxes[1].text() != 'O' && boxes[2].text() != 'O') {
-// 		alert('winner!');
-// 	} else if(boxes[3].text() == boxes[4].text() && boxes[3].text() == boxes[5].text() && boxes[3].text() != 'O' && boxes[4].text() != 'O' && boxes[5].text() != 'O') {
-// 		alert('winner!');
-// 	} else if(boxes[6].text() == boxes[7].text() && boxes[6].text() == boxes[8].text() && boxes[6].text() != 'O' && boxes[7].text() != 'O' && boxes[8].text() != 'O') {
-// 		alert('winner!');
-// 	}
-// }
-
-function determineWinner() {
-	if (winnerIs('X')) {
+var determineWinner = function() {
+	if (playerWinner('X')) {
     	if(firstPlayer == 'X') {
     		alert('Player1 wins!');
+    		firstPlayerScore++;
     	} else {
     		alert('Player2 wins!');
-    	}
-  	} else if (winnerIs('O')) {
+    		secondPlayerScore++;
+    	} 
+    	clickable = false;
+  	} else if (playerWinner('O')) {
    		if(firstPlayer == 'O') {
     		alert('Player1 wins!');
+    		firstPlayerScore++;
     	} else {
     		alert('Player2 wins!');
+    		secondPlayerScore++;
     	}
+    	clickable = false;
 	}
-  return null;
+	$('#player1').text('Player: ' + firstPlayerScore);
+	$('#player2').text('Player: ' + secondPlayerScore);
+  	return null;
 }
 
-function winnerIs(currentPlayer) {
-  return winsRow(currentPlayer) || winsColumn(currentPlayer) || winsDiagonal(currentPlayer);
+var playerWinner = function(currentPlayer) {
+	return winsRow(currentPlayer) || winsColumn(currentPlayer) || winsDiagonal(currentPlayer);
 }
 
-function winsRow(currentPlayer) {
-  return allThree(currentPlayer, boxes[0].text(), boxes[1].text(), boxes[2].text()) ||
+var winsRow = function(currentPlayer) {
+	return allThree(currentPlayer, boxes[0].text(), boxes[1].text(), boxes[2].text()) ||
          allThree(currentPlayer, boxes[3].text(), boxes[4].text(), boxes[5].text()) ||
          allThree(currentPlayer, boxes[6].text(), boxes[7].text(), boxes[8].text());
 }
 
-function winsColumn(currentPlayer) {
-  return allThree(currentPlayer, boxes[0].text(), boxes[3].text(), boxes[6].text()) ||
+var winsColumn = function(currentPlayer) {
+  	return allThree(currentPlayer, boxes[0].text(), boxes[3].text(), boxes[6].text()) ||
          allThree(currentPlayer, boxes[1].text(), boxes[4].text(), boxes[7].text()) ||
          allThree(currentPlayer, boxes[2].text(), boxes[5].text(), boxes[8].text());
 }
 
-function winsDiagonal(currentPlayer) {
-  return allThree(currentPlayer, boxes[0].text(), boxes[4].text(), boxes[8].text()) ||
+var winsDiagonal = function(currentPlayer) {
+  	return allThree(currentPlayer, boxes[0].text(), boxes[4].text(), boxes[8].text()) ||
          allThree(currentPlayer, boxes[2].text(), boxes[4].text(), boxes[6].text());
 }
 
-function allThree(currentPlayer, cellOne, cellTwo, cellThree) {
-  return (cellOne === currentPlayer) && (cellTwo === currentPlayer) && (cellThree === currentPlayer);
+var allThree = function(currentPlayer, cellOne, cellTwo, cellThree) {
+  	return (cellOne === currentPlayer) && (cellTwo === currentPlayer) && (cellThree === currentPlayer);
 }
+
+
 var startGame = function () {
 	makeGame();
 	render();
-	setCurrentPlayer();
 }
-
 startGame();
+
+$(document).ready(function(){
+  var $button = $('<button>Start</button>');
+  $button.on('click', function(){
+     setCurrentPlayer();
+     this.remove();
+  });
+  $('#game').append($button);
+});
+
