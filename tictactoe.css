@@ -1,0 +1,29 @@
+
+/*li {
+	height: 10%;
+	width: 10%;
+	background-color: red;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}*/
+
+ul {
+  list-style: none;
+  width: 45%;
+  height: 50%;
+  margin: 100px auto 0;
+  border: 1px solid black;
+}
+
+li {
+  float: left;
+  width: 32%;
+  height: 32%;
+  border: 1px solid black;
+}
+
+h1 {
+	text-align: center;
+}

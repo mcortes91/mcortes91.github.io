@@ -1,1 +1,1 @@
-![/Users/mcortes2891/downloads/project1_wireframe.jpg]()
+![my Wireframe!](/Users/mcortes2891/downloads/project1_wireframe.jpg)
