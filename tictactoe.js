@@ -8,19 +8,11 @@ var boxes = [];
 var firstPlayerScore = 0;
 var secondPlayerScore = 0;
 var clickable = false;
+var player1;
+var player2;
+var $playerOne;
+var $playerTwo;
 
-var setCurrentPlayer = function () {
-	var input = prompt('player, choose x or o: ').toUpperCase();
-	if(input == 'X') {
-		firstPlayer = 'X';
-		secondPlayer = 'O';
-	} else if( input == 'O') {
-		firstPlayer = 'O';
-		secondPlayer = 'X';
-	} 
-	currentPlayer = firstPlayer;
-	clickable = true;
-}
 
 var makeGame = function() {
 	ticTacToe = [];
@@ -31,7 +23,7 @@ var makeGame = function() {
 		};
 		ticTacToe.push(row);
 	};
-	 return ticTacToe;
+	return ticTacToe;
 };
 
 var reset = function() {
@@ -43,13 +35,13 @@ var reset = function() {
 
 var render = function() {
 	var $game = $('<div>').attr('id', 'gameBoard');
-	var $player1 = $('<div>').attr('id', 'player1');
-	var $player2 = $('<div>').attr('id', 'player2');
+	$playerOne = $('<div>').attr('id', 'player1');
+	$playerTwo = $('<div>').attr('id', 'player2');
 	var $reset = $('<button>reset</button>').attr('id', 'reset');
 	$reset.on('click', function() {
 		reset();
 	})
-	$('#game').append($player1, $player2, $reset);
+	$('#game').append($playerOne, $playerTwo);
 	var $ul = $('<ul>');
 	for(i = 0; i < ticTacToe.length; i++) {
 		var row = ticTacToe[i];
@@ -61,20 +53,39 @@ var render = function() {
 					if($(this).text() == false){
 						$(this).closest('li').addClass('xo').text(currentPlayer);
 					} 
-					changeTurn();
-					determineWinner();
-				}
+					else {
+						preventDefault();
+					}
+					
+				}	
+				changeTurn();
+				determineWinner();
 			})
 			$ul.append($li);
 		};
 	};
-	$('#game').append($game);
+	$('#game').append($game, $reset);
 	$game.append($ul);
 	$('#player1').text('Player: ' + firstPlayerScore);
 	$('#player2').text('Player: ' + secondPlayerScore);
 };
 
-
+var setCurrentPlayer = function () {
+	player1 = prompt('player 1 insert your name: ');
+	player2 = prompt('player 2 insert your name: ');
+	var input = prompt('player 1, choose x or o: ').toUpperCase();
+	if(input == 'X') {
+		firstPlayer = 'X';
+		secondPlayer = 'O';
+	} else if( input == 'O') {
+		firstPlayer = 'O';
+		secondPlayer = 'X';
+	} 
+	currentPlayer = firstPlayer;
+	clickable = true;
+	$('#player1').text(player1 + ': ' + firstPlayerScore);
+	$('#player2').text(player2 + ': ' + secondPlayerScore);
+}
 
 var changeTurn = function(){
 	if(currentPlayer == firstPlayer){
@@ -103,9 +114,9 @@ var determineWinner = function() {
     		secondPlayerScore++;
     	}
     	clickable = false;
-	}
-	$('#player1').text('Player: ' + firstPlayerScore);
-	$('#player2').text('Player: ' + secondPlayerScore);
+	} 
+	$('#player1').text(player1 + ': ' + firstPlayerScore);
+	$('#player2').text(player2 + ': ' + secondPlayerScore);
   	return null;
 }
 
@@ -142,11 +153,11 @@ var startGame = function () {
 startGame();
 
 $(document).ready(function(){
-  var $button = $('<button>Start</button>');
-  $button.on('click', function(){
-     setCurrentPlayer();
-     this.remove();
-  });
-  $('#game').append($button);
+	var $button = $('<button>Start</button>').attr('id', 'start');
+  	$button.on('click', function(){
+    	setCurrentPlayer();
+    	this.remove();
+  	});
+  	$('#game').append($button);
 });
 

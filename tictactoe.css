@@ -1,59 +1,75 @@
+body {
+	background-color: 96958E;
+}
+
+#game {
+	background-color: #F24E46;
+}
+
 ul {
-  list-style: none;
-  width: 50%;
-  height: 55%;
-  margin: 100px auto 0;
-  border-style: solid;
+  	list-style: none;
+  	width: 50%;
+  	height: 50%;
+  	margin: 100px auto 0;
 }
 
 li {
-  float: left;
-  width: 32%;
-  height: 32%;
-  border-color: transparent;
+  	float: left;
+  	width: 32%;
+  	height: 32%;
+  	border-color: transparent;
+  	font-size: 120px;
+  	text-align: center;
+  	transition-property: background-color;
+  	transition-duration: 2s;
+	transition-timing-function: ease;
+}
+
+li:hover {
+	background-color: 96958E;
 }
 
 li:first-child {
-  border-bottom: 1px;
-  border-right: 1px;
-  border-style: solid;
+  	border-bottom: 5px;
+  	border-right: 5px;
+  	border-style: solid;
 }
 
 li:nth-child(2) {
-  border-bottom: 1px;
-  border-style: solid;	
+  	border-bottom: 5px;
+  	border-style: solid;	
 }
 
 li:nth-child(4) {
-  border-bottom: 1px;
-  border-right: 1px;
-  border-style: solid;
+  	border-bottom: 5px;
+  	border-right: 5px;
+  	border-style: solid;
 }
 
 li:nth-child(5) {
-  border-bottom: 1px;
-  border-style: solid;	
+  	border-bottom: 5px;
+  	border-style: solid;	
 }
 
 li:nth-child(7) {
-  border-right: 1px;
-  border-style: solid;
+  	border-right: 5px;
+  	border-style: solid;
 }
 
 li:nth-child(8) {
-	border-bottom: 1px;
+	border-bottom: 5px;
 	border-style: solid;
 	border-bottom-color: transparent;
 }
 
 li:nth-child(3n+3) {
-  border-bottom: 1px;
-  border-left: 1px;
-  border-style: solid;
+  	border-bottom: 5px;
+  	border-left: 5px;
+  	border-style: solid;
 }
 
 li:nth-child(9) {
-  border-bottom-color: transparent;
+  	border-bottom-color: transparent;
 }
 
 h1 {
@@ -67,6 +83,9 @@ h1 {
 	float: left;
 	position: relative;
 	margin-top: 100px;
+	margin-left: 20px;
+	font-size: 30px;
+	text-align: center;
 }
 
 #player2 {
@@ -76,4 +95,23 @@ h1 {
 	float: right;
 	position: relative;
 	margin-top: 100px;
+	margin-right: 20px;
+	font-size: 30px;
+	text-align: center;
 }
+
+button {
+	height: 5%;
+	width: 7%;
+	position: absolute;
+	margin-top: 5%;
+}
+
+#reset {
+	margin-left: -25%;
+}
+
+#start {
+	margin-left: -35%;
+}
+
